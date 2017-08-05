@@ -7,6 +7,8 @@ class BankAccount < ApplicationRecord
 
   before_validation :load_defaults
 
+  has_many :account_transactions
+
   def load_defaults
     if self.new_record?
       self.balance = 0.00
