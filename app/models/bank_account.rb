@@ -1,9 +1,9 @@
 class BankAccount < ApplicationRecord
   belongs_to :client
 
-  validates :client, presense: true
-  validates :account_number, presense: true, uniqueness: true
-  validates :balance, presense: true, numbericality: true
+  validates :client, presence: true
+  validates :account_number, presence: true, uniqueness: true
+  validates :balance, presence: true, numericality: true
 
   before_validation :load_defaults
 
