@@ -1,12 +1,13 @@
-module api do
-  module v1 do
+module Api 
+  module V1 
     class BankAccountsController < ApplicationController
+      skip_before_action :verify_authenticity_token
+
       def new_transaction
         amount = params[:amount]
         transaction_type = params[:transaction_type]
         bank_account_id = params[:bank_account_id]
-
-        errors = ::BankAccount::ValidateNewTransaction.new(
+        errors = ::BankAccounts::ValidateNewTransaction.new(
                   amount: amount,
                   transaction_type: transaction_type,
                   bank_account_id: bank_account_id
@@ -15,7 +16,7 @@ module api do
         if errors.size > 0
           render json: { errors: errors }, status: 402
         else
-          bank_account = ::BankAccount::PerformTransaction.new(
+          bank_account = ::BankAccounts::PerformTransaction.new(
                           amount: amount,
                           transaction_type: transaction_type,
                           bank_account_id: bank_account_id
